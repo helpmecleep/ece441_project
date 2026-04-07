@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/impl_1/camera.tcl"
+  variable script "C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/impl_1/camera.tcl"
   variable category "vivado_impl"
 }
 
@@ -113,19 +113,19 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
-  set_property parent.project_path C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
-  set_property ip_output_repo C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
+  set_property webtalk.parent_dir C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
+  set_property parent.project_path C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
+  set_property ip_output_repo C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.dcp
-  read_ip -quiet C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci
-  read_ip -quiet C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
-  read_ip -quiet C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+  add_files -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.dcp
+  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci
+  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
+  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/Nexys-A7-100T-Master.xdc
+  read_xdc C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/Nexys-A7-100T-Master.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }

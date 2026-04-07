@@ -2,10 +2,10 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Thu Mar  5 15:02:49 2026
--- Host        : ws11-04 running 64-bit major release  (build 9200)
+-- Date        : Tue Apr  7 10:09:44 2026
+-- Host        : ws11-05 running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
---               c:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr_stub.vhdl
+--               c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr_stub.vhdl
 -- Design      : ddr
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tcsg324-1

@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1'
+HD_PWD='C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

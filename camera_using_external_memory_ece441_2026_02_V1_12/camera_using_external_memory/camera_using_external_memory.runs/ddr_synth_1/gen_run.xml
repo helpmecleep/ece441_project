@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="ddr_synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1772751614">
+<GenRun Id="ddr_synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1775581652">
   <File Type="PA-TCL" Name="ddr.tcl"/>
   <File Type="REPORTS-TCL" Name="ddr_reports.tcl"/>
   <File Type="RDS-RDS" Name="ddr.vds"/>

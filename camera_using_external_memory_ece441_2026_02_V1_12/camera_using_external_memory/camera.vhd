@@ -334,6 +334,15 @@ component sobel_filter is
         pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
     );
 end component;
+component binary_filter is
+    Port (
+        
+        RGBin : in STD_LOGIC_VECTOR (11 downto 0);
+        BinaryOut : out STD_LOGIC_VECTOR (11 downto 0)
+    );
+end component;
+
+
 
 
 
@@ -404,6 +413,7 @@ signal sad_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal xor_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal gray_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal sobel_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
+signal binary_pixel : STD_LOGIC_VECTOR(11 downto 0);
 
 begin
 
@@ -661,6 +671,12 @@ video_gray_negative_image : negative_image
         pixel_in => gray_pixel,
         pixel_out => gray_negative_pixel
     );
+    
+convert_to_binary : binary_filter
+    port map (
+        RGBin => stream1_pixel,
+        BinaryOut => binary_pixel
+    );
 
 process( 
     stream_select,
@@ -706,7 +722,7 @@ begin
             when "100" => video_pixel <= gray_pixel;
             when "101" => video_pixel <= xor_pixel;
             when "110" => video_pixel <= gray_negative_pixel;
-            when "111" => video_pixel <= stream1_pixel;
+            when "111" => video_pixel <= binary_pixel;
         end case;
     end if;
 end process;

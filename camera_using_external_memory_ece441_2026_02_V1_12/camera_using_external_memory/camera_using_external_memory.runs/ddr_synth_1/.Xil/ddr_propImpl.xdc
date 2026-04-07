@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:c:/Users/saredar/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr.xdc rfile:../../../camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr.xdc id:1 order:EARLY} [current_design]
+set_property SRC_FILE_INFO {cfile:c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr.xdc rfile:../../../camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr.xdc id:1 order:EARLY} [current_design]
 set_property src_info {type:XDC file:1 line:39 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN R7 [get_ports {ddr2_dq[0]}]
 set_property src_info {type:XDC file:1 line:45 export:INPUT save:INPUT read:READ} [current_design]

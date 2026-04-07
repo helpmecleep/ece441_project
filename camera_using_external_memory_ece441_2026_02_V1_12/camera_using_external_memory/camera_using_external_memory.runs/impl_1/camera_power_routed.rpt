@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date             : Thu Mar  5 15:33:16 2026
-| Host             : ws11-04 running 64-bit major release  (build 9200)
+| Date             : Tue Apr  7 11:10:47 2026
+| Host             : ws11-05 running 64-bit major release  (build 9200)
 | Command          : report_power -file camera_power_routed.rpt -pb camera_power_summary_routed.pb -rpx camera_power_routed.rpx
 | Design           : camera
 | Device           : xc7a100tcsg324-1
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.375        |
+| Total On-Chip Power (W)  | 1.388        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.266        |
+| Dynamic (W)              | 1.278        |
 | Device Static (W)        | 0.109        |
 | Effective TJA (C/W)      | 4.6          |
 | Max Ambient (C)          | 78.7         |
@@ -52,24 +52,24 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.015 |       26 |       --- |             --- |
-| Slice Logic              |     0.195 |    21938 |       --- |             --- |
-|   LUT as Logic           |     0.169 |     8124 |     63400 |           12.81 |
-|   LUT as Distributed RAM |     0.023 |     2402 |     19000 |           12.64 |
+| Clocks                   |     0.016 |       26 |       --- |             --- |
+| Slice Logic              |     0.196 |    21939 |       --- |             --- |
+|   LUT as Logic           |     0.171 |     8127 |     63400 |           12.82 |
+|   LUT as Distributed RAM |     0.022 |     2402 |     19000 |           12.64 |
 |   Register               |     0.002 |     7809 |    126800 |            6.16 |
-|   F7/F8 Muxes            |    <0.001 |       95 |     63400 |            0.15 |
+|   F7/F8 Muxes            |    <0.001 |       89 |     63400 |            0.14 |
 |   CARRY4                 |    <0.001 |      157 |     15850 |            0.99 |
 |   BUFG                   |    <0.001 |        7 |        32 |           21.88 |
-|   LUT as Shift Register  |    <0.001 |      175 |     19000 |            0.92 |
+|   LUT as Shift Register  |    <0.001 |      176 |     19000 |            0.93 |
 |   Others                 |     0.000 |      178 |       --- |             --- |
-| Signals                  |     0.220 |    16281 |       --- |             --- |
+| Signals                  |     0.230 |    16293 |       --- |             --- |
 | Block RAM                |     0.008 |        9 |       135 |            6.67 |
 | MMCM                     |     0.197 |        2 |         6 |           33.33 |
 | PLL                      |     0.000 |        1 |         6 |           16.67 |
 | I/O                      |     0.529 |      116 |       210 |           55.24 |
 | PHASER                   |     0.102 |       14 |       --- |             --- |
 | Static Power             |     0.109 |          |           |                 |
-| Total                    |     1.375 |          |           |                 |
+| Total                    |     1.388 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -79,7 +79,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.485 |       0.466 |      0.019 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.497 |       0.478 |      0.019 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.224 |       0.206 |      0.018 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.005 |       0.001 |      0.004 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -171,33 +171,33 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| camera                     |     1.266 |
-|   camera_status            |     0.081 |
-|   camera_video             |     1.068 |
+| camera                     |     1.278 |
+|   camera_status            |     0.079 |
+|   camera_video             |     1.081 |
 |     Inst_DDR               |     0.753 |
-|       u_ddr_mig            |     0.751 |
+|       u_ddr_mig            |     0.752 |
 |     Inst_ov7670_capture    |     0.004 |
 |     Inst_ov7670_controller |     0.001 |
 |     camera_data_even_line  |     0.004 |
 |       U0                   |     0.004 |
 |     camera_data_odd_line   |     0.003 |
 |       U0                   |     0.003 |
-|     stream1_even_line_out  |     0.005 |
-|       U0                   |     0.005 |
-|     stream1_odd_line_out   |     0.006 |
-|       U0                   |     0.006 |
-|     stream2_out_even       |     0.006 |
-|       U0                   |     0.006 |
-|     stream2_out_odd        |     0.006 |
-|       U0                   |     0.006 |
-|     timing                 |     0.061 |
+|     stream1_even_line_out  |     0.007 |
+|       U0                   |     0.007 |
+|     stream1_odd_line_out   |     0.008 |
+|       U0                   |     0.008 |
+|     stream2_out_even       |     0.010 |
+|       U0                   |     0.010 |
+|     stream2_out_odd        |     0.010 |
+|       U0                   |     0.010 |
+|     timing                 |     0.060 |
 |     xtime                  |     0.086 |
 |       inst                 |     0.086 |
 |   histogram_blue           |     0.031 |
-|   histogram_gray           |     0.003 |
+|   histogram_gray           |     0.004 |
 |   histogram_green          |     0.031 |
-|   histogram_red            |     0.032 |
-|   video_sobel_image        |     0.011 |
+|   histogram_red            |     0.033 |
+|   video_sobel_image        |     0.010 |
 +----------------------------+-----------+
 
 
