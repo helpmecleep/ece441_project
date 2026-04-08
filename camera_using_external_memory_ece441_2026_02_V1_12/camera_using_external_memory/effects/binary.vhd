@@ -25,28 +25,35 @@ use IEEE.NUMERIC_STD.ALL;
 entity binary_filter is
     Port (  
            RGBin     : in STD_LOGIC_VECTOR (11 downto 0);
-           BinaryOut : out STD_LOGIC_VECTOR (11 downto 0)
+           BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
+           ButtonUp, ButtonDown : in STD_LOGIC
     );
 end binary_filter;
 
 architecture Behavioral of binary_filter is
     signal intensity, red_temp, blue_temp, green_temp : unsigned(3 downto 0);
-    signal threshold : unsigned (3 downto 0);
+    signal threshold : unsigned(3 downto 0) := to_unsigned(7, 4);
 begin
 
     red_temp   <= "00" & unsigned(RGBin(11 downto 10));
     green_temp <= "00" & unsigned(RGBin(7 downto 6));
     blue_temp  <= "00" & unsigned(RGBin(3 downto 2));
     intensity  <= red_temp + green_temp + blue_temp;
-    threshold  <= "0111";
 
-    process(intensity, threshold)
+    process(ButtonUp, ButtonDown)
     begin
-        if (intensity < unsigned(threshold)) then
-            BinaryOut <= (others => '0');
-        else
-            BinaryOut <= (others => '1');
+        if rising_edge(ButtonUp) then
+            if threshold < to_unsigned(15, threshold'length) then
+                threshold <= threshold + 1;
+            end if;
+
+        elsif rising_edge(ButtonDown) then
+            if threshold > to_unsigned(0, threshold'length) then
+                threshold <= threshold - 1;
+            end if;
         end if; 
     end process;
+
+    BinaryOut <= (others => '0') when intensity < threshold else (others => '1');
 
 end Behavioral;

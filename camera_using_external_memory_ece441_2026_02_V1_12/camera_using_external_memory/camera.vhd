@@ -19,7 +19,7 @@ entity camera is
        previous_picture_button : in STD_LOGIC;
        next_picture_button : in STD_LOGIC;
        replay_video : in STD_LOGIC;
-       
+       ButtonUp, ButtonDown : in STD_LOGIC;
 
        vga_red : out std_logic_vector( 3 downto 0 );
        vga_green : out std_logic_vector( 3 downto 0 );
@@ -338,7 +338,8 @@ component binary_filter is
     Port (
         
         RGBin : in STD_LOGIC_VECTOR (11 downto 0);
-        BinaryOut : out STD_LOGIC_VECTOR (11 downto 0)
+        BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
+        ButtonUp, ButtonDown : in STD_LOGIC
     );
 end component;
 
@@ -676,6 +677,8 @@ convert_to_binary : binary_filter
     port map (
         RGBin => stream1_pixel,
         BinaryOut => binary_pixel
+        ButtonUp => ButtonUp,
+        ButtonDown => ButtonDown
     );
 
 process( 
@@ -697,7 +700,10 @@ process(
     negative_pixel,
     sad_pixel,
     xor_pixel,
-    sobel_pixel
+    sobel_pixel, 
+    gray_pixel,
+    gray_negative_pixel,
+    binary_pixel
 )
 
 begin
