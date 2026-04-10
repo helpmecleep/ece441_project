@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity binary_filter is
     Port (  
-           clk       : in STD_LOGIC;
+           clock       : in STD_LOGIC;
            RGBin     : in STD_LOGIC_VECTOR (11 downto 0);
            BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
            ButtonUp, ButtonDown : in STD_LOGIC;
@@ -15,6 +15,8 @@ end binary_filter;
 architecture Behavioral of binary_filter is
     signal intensity, red_temp, blue_temp, green_temp : unsigned(3 downto 0);
     signal threshold : unsigned(3 downto 0) := to_unsigned(7, 4);
+    signal upPrev: std_logic := '0';
+    signal downPrev: std_logic := '0';
 begin
 
     red_temp   <= "00" & unsigned(RGBin(11 downto 10));
@@ -22,18 +24,25 @@ begin
     blue_temp  <= "00" & unsigned(RGBin(3 downto 2));
     intensity  <= red_temp + green_temp + blue_temp;
 
-    process(clk)
+    process(clock)
     begin
-        if rising_edge(clk) then
-            if ButtonUp = '1' then
+        if rising_edge(clock) then
+            if ButtonUp = '1' and upPrev = '0' then
                 if threshold < to_unsigned(15, 4) then
                     threshold <= threshold + 1;
+                else
+                    threshold <= threshold;
                 end if;
-            elsif ButtonDown = '1' then
+            elsif ButtonDown = '1' and downPrev = '0' then
                 if threshold > to_unsigned(0, 4) then
                     threshold <= threshold - 1;
-                end if;
+                   else
+                    threshold <= threshold;            
+                     end if;
             end if;
+            
+            upPrev <= ButtonUp;
+            downPrev <= ButtonDown;
         end if;
     end process;
 
