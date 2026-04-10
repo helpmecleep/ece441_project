@@ -97,8 +97,9 @@ entity camera is
 --
 --  
 --
-       text_or_graphics_mode : in std_logic
- 
+    text_or_graphics_mode : in std_logic;
+    segmentsout: out std_logic_vector(7 downto 0);
+    digitsout: out std_logic_vector(7 downto 0
    );
 end camera;
 
@@ -214,6 +215,14 @@ component video is
     );
     end component;
 
+component led_display is 
+  Port ( 
+    Clock : in   STD_LOGIC;
+    Values : in   STD_LOGIC_VECTOR( 31 downto 0 );
+    Segments : out STD_LOGIC_VECTOR( 7 downto 0 );
+    Digits : out STD_LOGIC_VECTOR( 7 downto 0 )
+    );
+end component;
 
 component oled_display is
     Port (
@@ -336,7 +345,7 @@ component sobel_filter is
 end component;
 component binary_filter is
     Port (
-        
+        threshold_out : out STD_LOGIC_VECTOR( 31 downto 0 );
         RGBin : in STD_LOGIC_VECTOR (11 downto 0);
         BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
         ButtonUp, ButtonDown : in STD_LOGIC
@@ -415,6 +424,7 @@ signal xor_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal gray_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal sobel_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal binary_pixel : STD_LOGIC_VECTOR(11 downto 0);
+signal threshold_value_internal: STD_LOGIC_VECTOR( 31 downto 0 );
 
 begin
 
@@ -552,6 +562,14 @@ histogram_blue : histogram
         
     );
 
+threshold: led_display
+    port map(
+        Clock => clock,
+        Values => threshold_value_internal,
+        segments => segmentsout,
+        Digits => digitsout
+    );
+
 camera_status : oled_display
     port map (
 
@@ -678,7 +696,8 @@ convert_to_binary : binary_filter
         RGBin => stream1_pixel,
         BinaryOut => binary_pixel
         ButtonUp => ButtonUp,
-        ButtonDown => ButtonDown
+        ButtonDown => ButtonDown,
+        threshold_out => threshold_value_internal
     );
 
 process( 
