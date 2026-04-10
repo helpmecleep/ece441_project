@@ -97,9 +97,9 @@ entity camera is
 --
 --  
 --
-    text_or_graphics_mode : in std_logic;
-    segmentsout: out std_logic_vector(7 downto 0);
-    digitsout: out std_logic_vector(7 downto 0
+       text_or_graphics_mode : in std_logic;
+       Segments: out std_logic_vector(7 downto 0);
+       Digits: out std_logic_vector(7 downto 0)
    );
 end camera;
 
@@ -214,6 +214,7 @@ component video is
         
     );
     end component;
+
 
 component led_display is 
   Port ( 
@@ -345,7 +346,8 @@ component sobel_filter is
 end component;
 component binary_filter is
     Port (
-        threshold_out : out STD_LOGIC_VECTOR( 31 downto 0 );
+        threshold_out : out STD_LOGIC_VECTOR( 31 downto 0 );   
+        clock: in STD_LOGIC;
         RGBin : in STD_LOGIC_VECTOR (11 downto 0);
         BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
         ButtonUp, ButtonDown : in STD_LOGIC
@@ -425,9 +427,33 @@ signal gray_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal sobel_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal binary_pixel : STD_LOGIC_VECTOR(11 downto 0);
 signal threshold_value_internal: STD_LOGIC_VECTOR( 31 downto 0 );
-
+signal debounce_clock:  std_logic;
+signal debouncedButtonUp: std_logic := '0';
+signal debouncedButtonDown: std_logic := '0';
+signal reset_button_states: std_logic := '0';
 begin
-
+debounce_clock_out : entity work.debounce_clock
+port map (
+    clock_in => clock,
+    clock_out => debounce_clock
+    );
+ 
+debounced_up_button: entity work.debounce_switch
+    port map(
+        reset => reset_button_states,
+        clock => debounce_clock,
+        button_in => ButtonUp,
+        button_out => debouncedButtonUp
+    );
+    
+debounced_down_button: entity work.debounce_switch
+    port map(
+        reset => reset_button_states,
+        clock => debounce_clock,
+        button_in => ButtonDown,
+        button_out => debouncedButtonDown
+    );
+    
 camera_video : video
     Port map (
         video_source_switch => video_source_switch,
@@ -561,15 +587,13 @@ histogram_blue : histogram
         active => histogram_blue_active 
         
     );
-
 threshold: led_display
     port map(
         Clock => clock,
         Values => threshold_value_internal,
-        segments => segmentsout,
-        Digits => digitsout
+        segments => Segments,
+        Digits => Digits
     );
-
 camera_status : oled_display
     port map (
 
@@ -693,11 +717,12 @@ video_gray_negative_image : negative_image
     
 convert_to_binary : binary_filter
     port map (
+        threshold_out => threshold_value_internal,
+        clock => clock,
         RGBin => stream1_pixel,
-        BinaryOut => binary_pixel
-        ButtonUp => ButtonUp,
-        ButtonDown => ButtonDown,
-        threshold_out => threshold_value_internal
+        BinaryOut => binary_pixel,
+        ButtonUp => debouncedButtonUp,
+        ButtonDown => debouncedButtonDown
     );
 
 process( 
