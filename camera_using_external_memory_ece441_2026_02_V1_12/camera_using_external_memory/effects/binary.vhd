@@ -1,32 +1,14 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 
--- Design Name: 
--- Module Name: Binary - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity binary_filter is
     Port (  
+           clk       : in STD_LOGIC;
            RGBin     : in STD_LOGIC_VECTOR (11 downto 0);
            BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
-           ButtonUp, ButtonDown : in STD_LOGIC
+           ButtonUp, ButtonDown : in STD_LOGIC;
+           threshold_out : out STD_LOGIC_VECTOR(31 downto 0)
     );
 end binary_filter;
 
@@ -40,20 +22,25 @@ begin
     blue_temp  <= "00" & unsigned(RGBin(3 downto 2));
     intensity  <= red_temp + green_temp + blue_temp;
 
-    process(ButtonUp, ButtonDown)
+    process(clk)
     begin
-        if rising_edge(ButtonUp) then
-            if threshold < to_unsigned(15, threshold'length) then
-                threshold <= threshold + 1;
+        if rising_edge(clk) then
+            if ButtonUp = '1' then
+                if threshold < to_unsigned(15, 4) then
+                    threshold <= threshold + 1;
+                end if;
+            elsif ButtonDown = '1' then
+                if threshold > to_unsigned(0, 4) then
+                    threshold <= threshold - 1;
+                end if;
             end if;
-
-        elsif rising_edge(ButtonDown) then
-            if threshold > to_unsigned(0, threshold'length) then
-                threshold <= threshold - 1;
-            end if;
-        end if; 
+        end if;
     end process;
 
     BinaryOut <= (others => '0') when intensity < threshold else (others => '1');
+
+    threshold_out <= (31 downto 8 => '0') &
+                     std_logic_vector(to_unsigned(to_integer(threshold) / 10, 4)) &
+                     std_logic_vector(to_unsigned(to_integer(threshold) mod 10, 4));
 
 end Behavioral;
