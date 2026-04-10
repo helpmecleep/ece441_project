@@ -1,38 +1,22 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 
--- Design Name: 
--- Module Name: Binary - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity binary_filter is
     Port (  
+           clock       : in STD_LOGIC;
            RGBin     : in STD_LOGIC_VECTOR (11 downto 0);
            BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
-           ButtonUp, ButtonDown : in STD_LOGIC
+           ButtonUp, ButtonDown : in STD_LOGIC;
+           threshold_out : out STD_LOGIC_VECTOR(31 downto 0)
     );
 end binary_filter;
 
 architecture Behavioral of binary_filter is
     signal intensity, red_temp, blue_temp, green_temp : unsigned(3 downto 0);
     signal threshold : unsigned(3 downto 0) := to_unsigned(7, 4);
+    signal upPrev: std_logic := '0';
+    signal downPrev: std_logic := '0';
 begin
 
     red_temp   <= "00" & unsigned(RGBin(11 downto 10));
@@ -40,20 +24,32 @@ begin
     blue_temp  <= "00" & unsigned(RGBin(3 downto 2));
     intensity  <= red_temp + green_temp + blue_temp;
 
-    process(ButtonUp, ButtonDown)
+    process(clock)
     begin
-        if rising_edge(ButtonUp) then
-            if threshold < to_unsigned(15, threshold'length) then
-                threshold <= threshold + 1;
+        if rising_edge(clock) then
+            if ButtonUp = '1' and upPrev = '0' then
+                if threshold < to_unsigned(15, 4) then
+                    threshold <= threshold + 1;
+                else
+                    threshold <= threshold;
+                end if;
+            elsif ButtonDown = '1' and downPrev = '0' then
+                if threshold > to_unsigned(0, 4) then
+                    threshold <= threshold - 1;
+                   else
+                    threshold <= threshold;            
+                     end if;
             end if;
-
-        elsif rising_edge(ButtonDown) then
-            if threshold > to_unsigned(0, threshold'length) then
-                threshold <= threshold - 1;
-            end if;
-        end if; 
+            
+            upPrev <= ButtonUp;
+            downPrev <= ButtonDown;
+        end if;
     end process;
 
     BinaryOut <= (others => '0') when intensity < threshold else (others => '1');
+
+    threshold_out <= (31 downto 8 => '0') &
+                     std_logic_vector(to_unsigned(to_integer(threshold) / 10, 4)) &
+                     std_logic_vector(to_unsigned(to_integer(threshold) mod 10, 4));
 
 end Behavioral;
