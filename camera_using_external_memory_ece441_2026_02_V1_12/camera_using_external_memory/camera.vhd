@@ -46,23 +46,6 @@ entity camera is
 
        state_machine_status : out STD_LOGIC_VECTOR( 12 downto 0 );
 
--- 
--- DDR2 interface
---
-       ddr2_addr            : out   std_logic_vector(12 downto 0);
-       ddr2_ba              : out   std_logic_vector(2 downto 0);
-       ddr2_ras_n           : out   std_logic;
-       ddr2_cas_n           : out   std_logic;
-       ddr2_we_n            : out   std_logic;
-       ddr2_ck_p            : out   std_logic_vector(0 downto 0);
-       ddr2_ck_n            : out   std_logic_vector(0 downto 0);
-       ddr2_cke             : out   std_logic_vector(0 downto 0);
-       ddr2_cs_n            : out   std_logic_vector(0 downto 0);
-       ddr2_dm              : out   std_logic_vector(1 downto 0);
-       ddr2_odt             : out   std_logic_vector(0 downto 0);
-       ddr2_dq              : inout std_logic_vector(15 downto 0);
-       ddr2_dqs_p           : inout std_logic_vector(1 downto 0);
-       ddr2_dqs_n           : inout std_logic_vector(1 downto 0);
        reset_state_machine : in STD_LOGIC;
        configure_camera : in STD_LOGIC;
        
@@ -183,25 +166,6 @@ component video is
 --
         status_leds : out STD_LOGIC_VECTOR( 12 downto 0 );
 
---
--- DDR2 interface
---
-        ddr2_addr            : out   std_logic_vector(12 downto 0);
-        ddr2_ba              : out   std_logic_vector(2 downto 0);
-        ddr2_ras_n           : out   std_logic;
-        ddr2_cas_n           : out   std_logic;
-        ddr2_we_n            : out   std_logic;
-        ddr2_ck_p            : out   std_logic_vector(0 downto 0);
-        ddr2_ck_n            : out   std_logic_vector(0 downto 0);
-        ddr2_cke             : out   std_logic_vector(0 downto 0);
-        ddr2_cs_n            : out   std_logic_vector(0 downto 0);
-        ddr2_dm              : out   std_logic_vector(1 downto 0);
-        ddr2_odt             : out   std_logic_vector(0 downto 0);
-        ddr2_dq              : inout std_logic_vector(15 downto 0);
-        ddr2_dqs_p           : inout std_logic_vector(1 downto 0);
-        ddr2_dqs_n           : inout std_logic_vector(1 downto 0);
-      
-        clock_200Mhz         : out STD_LOGIC;
         --reset : in STD_LOGIC;
       
         reset_state_machine : in STD_LOGIC;
@@ -363,8 +327,6 @@ constant PIXEL_GREEN : STD_LOGIC_VECTOR( 11 downto 0 ) := "000011110000";
 constant PIXEL_BLUE : STD_LOGIC_VECTOR( 11 downto 0 ) := "000000001111";
 constant PIXEL_GRAY : STD_LOGIC_VECTOR( 11 downto 0 ) := "100010001000";
 
-signal clock_200Mhz : STD_LOGIC;
-
 --
 -- Video related signals
 --
@@ -472,7 +434,6 @@ camera_video : video
         video_pixel => video_pixel,
         write_enable => EnableWrite,
         configure_camera => configure_camera,
-        clock_200Mhz => clock_200Mhz,
         video_visible_frame => visible_frame,
         video_v_line => v_line,
      
@@ -489,20 +450,6 @@ camera_video : video
         video_h_dot => h_dot,
         camera_configured => camera_configured,
         
-        ddr2_addr => ddr2_addr,
-        ddr2_ba => ddr2_ba,
-        ddr2_ras_n => ddr2_ras_n,
-        ddr2_cas_n => ddr2_cas_n,
-        ddr2_we_n => ddr2_we_n,
-        ddr2_ck_p => ddr2_ck_p,
-        ddr2_ck_n => ddr2_ck_n,
-        ddr2_cke => ddr2_cke,
-        ddr2_cs_n => ddr2_cs_n,
-        ddr2_dm => ddr2_dm,
-        ddr2_odt => ddr2_odt,
-        ddr2_dq => ddr2_dq,
-        ddr2_dqs_p => ddr2_dqs_p,
-        ddr2_dqs_n => ddr2_dqs_n,
         reset_state_machine => reset_state_machine,
         
         video_vga_red => vga_red,
