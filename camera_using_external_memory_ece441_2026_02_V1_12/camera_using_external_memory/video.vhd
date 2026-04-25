@@ -759,7 +759,7 @@ camera_data_even_line : line_buffer
     addra  => video_source_address_write,
     dina => video_source_write_data,
     
-    clkb => VideoClock,
+    clkb => mem_ui_clk,
     addrb => std_logic_vector(CamHdotAddress),
     doutb => CamDataEven
   );
@@ -772,7 +772,7 @@ camera_data_odd_line : line_buffer
     addra  => video_source_address_write, 
     dina => video_source_write_data,
     
-    clkb => VideoClock, 
+    clkb => mem_ui_clk, 
     addrb => std_logic_vector(CamHdotAddress),
     doutb => CamDataOdd
   );
