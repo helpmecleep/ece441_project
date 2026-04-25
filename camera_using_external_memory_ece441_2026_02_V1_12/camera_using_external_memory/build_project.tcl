@@ -18,30 +18,6 @@ update_compile_order -fileset sources_1
 
 
 #
-# Create mig ddr 2 interface
-#
-
-create_ip -name mig_7series -vendor xilinx.com -library ip -version 4.0 -module_name ddr
-
-if { [info exist ::env(OS)] } { exec cp.bat  mig_a.prj camera_using_external_memory.srcs\\sources_1\\ip\\ddr\\  } else { exec cp ./mig_a.prj camera_using_external_memory.srcs/sources_1/ip/ddr/ }
-
-#exec cp ./mig_a.prj camera_using_external_memory.srcs/sources_1/ip/ddr/
-
-set_property -dict [list CONFIG.XML_INPUT_FILE {mig_a.prj} CONFIG.RESET_BOARD_INTERFACE {Custom} CONFIG.MIG_DONT_TOUCH_PARAM {Custom} CONFIG.BOARD_MIG_PARAM {Custom}] [get_ips ddr]
-generate_target {instantiation_template} [get_files ./camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci]
-
-generate_target all [get_files  ./camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci]
-
-catch { config_ip_cache -export [get_ips -all ddr] }
-export_ip_user_files -of_objects [get_files ./camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci] -no_script -sync -force -quiet
-create_ip_run [get_files -of_objects [get_fileset sources_1] ./camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci]
-launch_runs -jobs 4 ddr_synth_1
-
-
-export_simulation -of_objects [get_files ./camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci] -directory ./camera_using_external_memory.ip_user_files/sim_scripts -ip_user_files_dir ./camera_using_external_memory.ip_user_files -ipstatic_source_dir ./camera_using_external_memory.ip_user_files/ipstatic -lib_map_path [list {modelsim=./camera_using_external_memory.cache/compile_simlib/modelsim} {questa=./camera_using_external_memory.cache/compile_simlib/questa} {ies=./camera_using_external_memory.cache/compile_simlib/ies} {vcs=./camera_using_external_memory.cache/compile_simlib/vcs} {riviera=./camera_using_external_memory.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-
-
-#
 # create block memory line buffer
 #
 

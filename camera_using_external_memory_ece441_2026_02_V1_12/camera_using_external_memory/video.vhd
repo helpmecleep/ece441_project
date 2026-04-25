@@ -85,24 +85,8 @@ entity video is
     status_leds : out STD_LOGIC_VECTOR( 12 downto 0 );
     
     
-      -- DDR2 interface
-    ddr2_addr            : out   std_logic_vector(12 downto 0);
-    ddr2_ba              : out   std_logic_vector(2 downto 0);
-    ddr2_ras_n           : out   std_logic;
-    ddr2_cas_n           : out   std_logic;
-    ddr2_we_n            : out   std_logic;
-    ddr2_ck_p            : out   std_logic_vector(0 downto 0);
-    ddr2_ck_n            : out   std_logic_vector(0 downto 0);
-    ddr2_cke             : out   std_logic_vector(0 downto 0);
-    ddr2_cs_n            : out   std_logic_vector(0 downto 0);
-    ddr2_dm              : out   std_logic_vector(1 downto 0);
-    ddr2_odt             : out   std_logic_vector(0 downto 0);
-    ddr2_dq              : inout std_logic_vector(15 downto 0);
-    ddr2_dqs_p           : inout std_logic_vector(1 downto 0);
-    ddr2_dqs_n           : inout std_logic_vector(1 downto 0);    
     --reset : in STD_LOGIC;
 
-    clock_200Mhz         : out STD_LOGIC;
     reset_state_machine : in STD_LOGIC;
     
     QSPI_SDI : out STD_LOGIC;
@@ -202,55 +186,6 @@ component line_buffer IS
   );
 END component;
 
-
-component ddr is
-generic (
-          SKIP_CALIB : string := "TRUE"
-          );
-port (
-    ddr2_dq       : inout std_logic_vector(15 downto 0);
-    ddr2_dqs_p    : inout std_logic_vector(1 downto 0);
-    ddr2_dqs_n    : inout std_logic_vector(1 downto 0);
-    ddr2_addr     : out   std_logic_vector(12 downto 0);
-    ddr2_ba       : out   std_logic_vector(2 downto 0);
-    ddr2_ras_n    : out   std_logic;
-    ddr2_cas_n    : out   std_logic;
-    ddr2_we_n     : out   std_logic;
-    ddr2_ck_p     : out   std_logic_vector(0 downto 0);
-    ddr2_ck_n     : out   std_logic_vector(0 downto 0);
-    ddr2_cke      : out   std_logic_vector(0 downto 0);
-    ddr2_cs_n     : out   std_logic_vector(0 downto 0);
-    ddr2_dm       : out   std_logic_vector(1 downto 0);
-    ddr2_odt      : out   std_logic_vector(0 downto 0);
-    app_addr                  : in    std_logic_vector(26 downto 0);
-    app_cmd                   : in    std_logic_vector(2 downto 0);
-    app_en                    : in    std_logic;
-    app_wdf_data              : in    std_logic_vector(127 downto 0);
-    app_wdf_end               : in    std_logic;
-    app_wdf_mask         : in    std_logic_vector(15 downto 0);
-    --app_wdf_mask         : in    std_logic_vector(7 downto 0);
-    app_wdf_wren              : in    std_logic;
-    app_rd_data               : out   std_logic_vector(127 downto 0);
-    app_rd_data_end           : out   std_logic;
-    app_rd_data_valid         : out   std_logic;
-    app_rdy                   : out   std_logic;
-    app_wdf_rdy               : out   std_logic;
-    app_sr_req                : in    std_logic;
-    app_ref_req               : in    std_logic;
-    app_zq_req                : in    std_logic;
-    app_sr_active             : out   std_logic;
-    app_ref_ack               : out   std_logic;
-    app_zq_ack                : out   std_logic;
-    ui_clk                    : out   std_logic;
-    ui_clk_sync_rst           : out   std_logic;
-    init_calib_complete       : out   std_logic;
-    -- System Clock Ports
-    sys_clk_i                      : in    std_logic;
-    -- Reference Clock Ports
-    --clk_ref_i                                : in    std_logic;
-    device_temp_i                            : in    std_logic_vector(11 downto 0);
-    sys_rst                     : in    std_logic);
-end component;
 
 component clk_wiz_0 is
     port (
@@ -356,15 +291,6 @@ signal configure_camera_db : STD_LOGIC;
 --
 signal mem_ui_clk          : std_logic;
 signal mem_ui_rst          : std_logic;
-signal rst                 : std_logic;
-signal rstn                : std_logic;
-signal sreg                : std_logic_vector(1 downto 0);
-
--- ram internal signals
-signal ram_dq_i_int        : std_logic_vector(95 downto 0);
-signal ram_cen_int         : std_logic;
-signal ram_oen_int         : std_logic;
-signal ram_wen_int         : std_logic;
 
 -- ddr user interface signals
 
@@ -372,9 +298,7 @@ signal mem_cmd             : std_logic_vector(2 downto 0); -- command for curren
 signal mem_en              : std_logic; -- active-high strobe for 'cmd' and 'addr'
 signal mem_rdy             : std_logic;
 signal mem_wdf_rdy         : std_logic; -- write data FIFO is ready to receive data (wdf_rdy = 1 & wdf_wren = 1)
-signal mem_wdf_data        : std_logic_vector( 95 downto 0);
 signal mem_wdf_end         : std_logic; -- active-high last 'wdf_data'
-signal mem_wdf_mask        : std_logic_vector(15 downto 0) := "0000000000000000";
 signal mem_wdf_wren        : std_logic;
 signal mem_rd_data         : std_logic_vector( 95 downto 0);
 signal mem_rd_data_end     : std_logic; -- active-high last 'rd_data'
@@ -450,18 +374,13 @@ signal DoRead : std_logic := '0';
 signal DoDummyRead : std_logic := '0';
 
 signal NextAddress : unsigned( 26 downto 0 ) := to_unsigned( 0, 27);
-signal DeviceTemp : std_logic_vector( 11 downto 0 ) := "000000000000";
-signal DoRefresh : std_logic := '0';
-signal RefreshAck : std_logic := '0';
 signal CamPage : unsigned( 7 downto 0 ) := to_unsigned( 7, 8 );
 signal TriggerWrite : std_logic := '0';
 signal ReadDone : std_logic := '0';
-signal tmp_var : std_logic_vector( 31 downto 0 );
 signal previous_picture : STD_LOGIC := '0';
 signal next_picture : STD_LOGIC := '0';
 
 signal reset : std_logic := '1';
-signal reset_not : std_logic;
 signal video_source : STD_LOGIC; 
 
 attribute FSM_ENCODING              : string;
@@ -840,7 +759,7 @@ camera_data_even_line : line_buffer
     addra  => video_source_address_write,
     dina => video_source_write_data,
     
-    clkb => mem_ui_clk,
+    clkb => VideoClock,
     addrb => std_logic_vector(CamHdotAddress),
     doutb => CamDataEven
   );
@@ -853,7 +772,7 @@ camera_data_odd_line : line_buffer
     addra  => video_source_address_write, 
     dina => video_source_write_data,
     
-    clkb => mem_ui_clk, 
+    clkb => VideoClock, 
     addrb => std_logic_vector(CamHdotAddress),
     doutb => CamDataOdd
   );
@@ -1146,59 +1065,14 @@ begin
     end if;
 end process;
 
-------------------------------------------------------------------------
--- DDR controller instance
-------------------------------------------------------------------------
-   Inst_DDR: ddr
-    port map (
-      ddr2_dq              => ddr2_dq,
-      ddr2_dqs_p           => ddr2_dqs_p,
-      ddr2_dqs_n           => ddr2_dqs_n,
-      ddr2_addr            => ddr2_addr,
-      ddr2_ba              => ddr2_ba,
-      ddr2_ras_n           => ddr2_ras_n,
-      ddr2_cas_n           => ddr2_cas_n,
-      ddr2_we_n            => ddr2_we_n,
-      ddr2_ck_p            => ddr2_ck_p,
-      ddr2_ck_n            => ddr2_ck_n,
-      ddr2_cke             => ddr2_cke,
-      ddr2_dm              => ddr2_dm,
-      ddr2_odt             => ddr2_odt,
-      ddr2_cs_n            => ddr2_cs_n, -- cs_out,
-      
-      --ddr2_reset_n         => ddr3_reset_n,
-      -- Inputs
-      sys_clk_i            => clk_200Mhz_i,
-      --clk_ref_i            => clk_200Mhz_i,
-      sys_rst              => reset_not,
-      -- user interface signals
-      app_addr             => std_logic_vector(NextAddress), -- mem_addr,
-      app_cmd              => mem_cmd,
-      app_en               => mem_en,
-      app_wdf_data( 127 downto 96 ) => (others=>'0'),
-      app_wdf_data( 95 downto 0 ) => CamData( 95 downto 0 ), -- mem_wdf_data( 127 downto 0 ),
-      app_wdf_end          => mem_wdf_end,
-      app_wdf_mask         => mem_wdf_mask,
-      app_wdf_wren         => mem_wdf_wren,
-      
-      app_rd_data( 127 downto 96 ) => tmp_var,
-      app_rd_data( 95 downto 0 ) => mem_rd_data( 95 downto 0),
-      app_rd_data_end      => mem_rd_data_end,
-      app_rd_data_valid    => mem_rd_data_valid,
-      app_rdy              => mem_rdy,
-      app_wdf_rdy          => mem_wdf_rdy,
-      app_sr_req           => '0',
-      app_sr_active        => open,
-      app_ref_req          => DoRefresh,
-      app_ref_ack          => RefreshAck,
-      app_zq_req           => '0',
-      app_zq_ack           => open,
-      ui_clk               => mem_ui_clk,
-      ui_clk_sync_rst      => mem_ui_rst,
-      init_calib_complete  => calib_complete,
-      device_temp_i        => DeviceTemp
-      
-      );
+mem_ui_clk <= VideoClock;
+mem_ui_rst <= reset;
+mem_rdy <= '1';
+mem_wdf_rdy <= '1';
+mem_rd_data <= CamData;
+mem_rd_data_end <= '0';
+mem_rd_data_valid <= '1' when (( cState = Stream1Read_t ) or ( cState = Stream2Read_t ) or ( cState = Stream3Read_t )) else '0';
+calib_complete <= '1';
 
 
 do_debouncer_clock : debounce_clock
@@ -1302,11 +1176,8 @@ NEXT_STATE_DECODE: process(
     mem_ui_clk,
     cState,
     calib_complete,
-    ram_cen_int,
     mem_rdy,
     mem_wdf_rdy,
-    ram_wen_int,
-    ram_oen_int,
     mem_ui_rst,
     mem_rd_data_valid,
     CamWriteEnable
@@ -1728,10 +1599,6 @@ begin
 	end if;
 end process;
 
-reset_not <= not reset;
-
-
-
 status_leds(0) <= '1' when cState = Idle_t else '0';
 status_leds(1) <= '1' when cState = Stream1Read_t else '0';
 status_leds(2) <= '1' when cState = Stream1ReadWait_t else '0';   
@@ -1748,7 +1615,6 @@ status_leds(11) <= '1' when cState = Stream3ReadWait_t else '0';
 status_leds(12) <= '1' when cState = Finished_t else '0'; 
 
 video_clock <= VideoClock;
-clock_200Mhz <= clk_200Mhz_i;
 
 video_h_dot  <= hdot;
 video_v_line <= vline;
@@ -1756,7 +1622,3 @@ video_h_sync <= h_sync;
 video_v_sync <= v_sync;
 video_visible_frame  <= visible_frame;
 end Behavioral;
-
-
-
-
