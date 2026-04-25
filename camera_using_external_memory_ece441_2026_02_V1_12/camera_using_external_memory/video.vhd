@@ -1069,9 +1069,9 @@ mem_ui_clk <= VideoClock;
 mem_ui_rst <= reset;
 mem_rdy <= '1';
 mem_wdf_rdy <= '1';
-mem_rd_data <= CamData;
+mem_rd_data <= CamData( 95 downto 0 );
 mem_rd_data_end <= '0';
-mem_rd_data_valid <= '1' when (( cState = Stream1Read_t ) or ( cState = Stream2Read_t ) or ( cState = Stream3Read_t )) else '0';
+mem_rd_data_valid <= '1' when (( mem_en = '1' ) and ( mem_cmd = CMD_READ )) else '0';
 calib_complete <= '1';
 
 
