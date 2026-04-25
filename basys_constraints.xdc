@@ -37,10 +37,10 @@ set_property PACKAGE_PIN R3 [get_ports { ov7670_drive[1] }]
 #	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[12]}]
 #set_property PACKAGE_PIN U1 [get_ports {in_port[13]}]					
 #	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[13]}]
-set_property PACKAGE_PIN T1 [get_ports boot_mode]					
-	set_property IOSTANDARD LVCMOS33 [ get_ports boot_mode]
-set_property PACKAGE_PIN R2 [get_ports debug_console]          
-      set_property IOSTANDARD LVCMOS33 [get_ports debug_console]
+#set_property PACKAGE_PIN T1 [get_ports boot_mode]					
+	#set_property IOSTANDARD LVCMOS33 [ get_ports boot_mode]
+set_property PACKAGE_PIN R2 [get_ports { camera_configured }]        
+      set_property IOSTANDARD LVCMOS33 [get_ports { camera_configured }]
 
 
 ## LEDs
@@ -79,20 +79,20 @@ set_property PACKAGE_PIN P3 [get_ports {state_machine_status[12]}]
 	
 	
 ##7 segment display
-#set_property PACKAGE_PIN W7 [get_ports {seg[0]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[0]}]
-#set_property PACKAGE_PIN W6 [get_ports {seg[1]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[1]}]
-#set_property PACKAGE_PIN U8 [get_ports {seg[2]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[2]}]
-#set_property PACKAGE_PIN V8 [get_ports {seg[3]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[3]}]
-#set_property PACKAGE_PIN U5 [get_ports {seg[4]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[4]}]
-#set_property PACKAGE_PIN V5 [get_ports {seg[5]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[5]}]
-#set_property PACKAGE_PIN U7 [get_ports {seg[6]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {seg[6]}]
+#set_property PACKAGE_PIN W7 [get_ports {Segments[0]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[0]}]
+#set_property PACKAGE_PIN W6 [get_ports {Segments[1]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[1]}]
+#set_property PACKAGE_PIN U8 [get_ports {Segments[2]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[2]}]
+#set_property PACKAGE_PIN V8 [get_ports {Segments[3]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[3]}]
+#set_property PACKAGE_PIN U5 [get_ports {Segments[4]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[4]}]
+#set_property PACKAGE_PIN V5 [get_ports {Segments[5]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[5]}]
+#set_property PACKAGE_PIN U7 [get_ports {Segments[6]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {Segments[6]}]
 
 #set_property PACKAGE_PIN V7 [get_ports dp]							
 	#set_property IOSTANDARD LVCMOS33 [get_ports dp]
@@ -108,16 +108,16 @@ set_property PACKAGE_PIN P3 [get_ports {state_machine_status[12]}]
 
 
 ##Buttons
-set_property PACKAGE_PIN U18 [get_ports reset]
-	set_property IOSTANDARD LVCMOS33 [get_ports reset]
-#set_property PACKAGE_PIN T18 [get_ports btnU]						
-	#set_property IOSTANDARD LVCMOS33 [get_ports btnU]
-#set_property PACKAGE_PIN W19 [get_ports btnL]						
-	#set_property IOSTANDARD LVCMOS33 [get_ports btnL]
-#set_property PACKAGE_PIN T17 [get_ports btnR]						
-	#set_property IOSTANDARD LVCMOS33 [get_ports btnR]
-#set_property PACKAGE_PIN U17 [get_ports btnD]						
-	#set_property IOSTANDARD LVCMOS33 [get_ports btnD]
+set_property PACKAGE_PIN U18 [get_ports { configure_camera }]
+	set_property IOSTANDARD LVCMOS33 [get_ports { configure_camera }]
+#set_property PACKAGE_PIN T18 [get_ports { reset_state_machine }]						
+	#set_property IOSTANDARD LVCMOS33 [get_ports { reset_state_machine }]
+#set_property PACKAGE_PIN W19 [get_ports { ButtonUp }]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports { ButtonUp }]
+#set_property PACKAGE_PIN T17 [get_ports { previous_picture_button }]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports { previous_picture_button }]
+#set_property PACKAGE_PIN U17 [get_ports { next_picture_button }]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports { next_picture_button }]
  
 
 
@@ -179,31 +179,29 @@ set_property PACKAGE_PIN C16 [get_ports {in_port[15]}]
 
 ##Pmod Header JC
 ##Sch name = JC1
-set_property PACKAGE_PIN K17 [get_ports clk]
-	set_property IOSTANDARD LVCMOS33 [get_ports clk]
-		create_clock -name ext_clk -period 125.000 [get_ports clk]
-##		set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_IBUF]
+set_property PACKAGE_PIN K17 [get_ports { ov7670_data[0] }]
+	set_property IOSTANDARD LVCMOS33 [get_ports { ov7670_data[0] }]
 ##Sch name = JC2
-set_property PACKAGE_PIN M18 [get_ports {out_port[0]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {out_port[0]}]
+set_property PACKAGE_PIN M18 [get_ports { ov7670_data[1] }]				
+	set_property IOSTANDARD LVCMOS33 [get_ports { ov7670_data[1] }]
 ##Sch name = JC3
-#set_property PACKAGE_PIN N17 [get_ports {JC[2]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[2]}]
+#set_property PACKAGE_PIN N17 [get_ports {ov7670_data[2]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[2]}]
 ##Sch name = JC4
-#set_property PACKAGE_PIN P18 [get_ports {JC[3]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[3]}]
+#set_property PACKAGE_PIN P18 [get_ports {ov7670_data[3]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[3]}]
 ##Sch name = JC7
-#set_property PACKAGE_PIN L17 [get_ports {JC[4]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[4]}]
+#set_property PACKAGE_PIN L17 [get_ports {ov7670_data[4]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[4]}]
 ##Sch name = JC8
-#set_property PACKAGE_PIN M19 [get_ports {JC[5]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[5]}]
+#set_property PACKAGE_PIN M19 [get_ports {ov7670_data[5]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[5]}]
 ##Sch name = JC9
-set_property PACKAGE_PIN P17 [get_ports {in_port[6]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[6]}]
+set_property PACKAGE_PIN P17 [get_ports {ov7670_data[6]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[6]}]
 ##Sch name = JC10
-set_property PACKAGE_PIN R18 [get_ports {in_port[7]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[7]}]
+set_property PACKAGE_PIN R18 [get_ports {ov7670_data[7]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[7]}]
 
 
 ##Pmod Header JXADC
@@ -284,13 +282,13 @@ set_property PACKAGE_PIN R19 [get_ports v_sync_signal]
 ##Quad SPI Flash
 ##Note that CCLK_0 cannot be placed in 7 series devices. You can access it using the
 ##STARTUPE2 primitive.
-#set_property PACKAGE_PIN D18 [get_ports {QspiDB[0]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {QspiDB[0]}]
-#set_property PACKAGE_PIN D19 [get_ports {QspiDB[1]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {QspiDB[1]}]
-#set_property PACKAGE_PIN G18 [get_ports {QspiDB[2]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {QspiDB[2]}]
-#set_property PACKAGE_PIN F18 [get_ports {QspiDB[3]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {QspiDB[3]}]
-#set_property PACKAGE_PIN K19 [get_ports QspiCSn]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports QspiCSn]
+set_property PACKAGE_PIN D18 [get_ports { QSPI_SDI }]	
+	set_property IOSTANDARD LVCMOS33 [get_ports { QSPI_SDI }]
+set_property PACKAGE_PIN D19 [get_ports { QSPI_SDO }]			
+	set_property IOSTANDARD LVCMOS33 [get_ports { QSPI_SDO }]
+set_property PACKAGE_PIN G18 [get_ports { QSPI_WP }]			
+	set_property IOSTANDARD LVCMOS33 [get_ports { QSPI_WP }]
+set_property PACKAGE_PIN F18 [get_ports { QSPI_HLD }]			
+	set_property IOSTANDARD LVCMOS33 [get_ports { QSPI_HLD }]
+set_property PACKAGE_PIN K19 [get_ports { QSPI_CS }]					
+	set_property IOSTANDARD LVCMOS33 [get_ports { QSPI_CS }]
