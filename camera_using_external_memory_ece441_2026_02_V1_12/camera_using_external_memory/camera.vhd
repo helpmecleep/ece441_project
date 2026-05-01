@@ -318,24 +318,6 @@ component binary_filter is
     );
 end component;
 
-component erosion_filter is
-    generic (
-        SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
-        SCREEN_Y_SIZE : UNSIGNED( 9 downto 0 )
-    );
-    port (
-        video_clock : in STD_LOGIC;
-        v_sync : in STD_LOGIC;
-        visible_frame : in STD_LOGIC;
-        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
-        binary_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
-
-        pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
-    );
-
-
-
-
 
 constant PIXEL_RED : STD_LOGIC_VECTOR( 11 downto 0 ) := "111100000000";
 constant PIXEL_GREEN : STD_LOGIC_VECTOR( 11 downto 0 ) := "000011110000";
