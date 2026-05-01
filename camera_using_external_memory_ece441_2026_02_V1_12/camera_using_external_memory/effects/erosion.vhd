@@ -31,6 +31,15 @@ signal min_row0, min_row1, min_row2: std_logic_vector(3 downto 0);
 -- Signals for final erosion output
 signal erosion_result : std_logic_vector(3 downto 0);
 
+function min2(a, b : std_logic_vector(3 downto 0)) return std_logic_vector is
+begin
+    if unsigned(a) <= unsigned(b) then
+        return a;
+    else
+        return b;
+    end if;
+end function;
+
 
 begin
 
@@ -42,15 +51,6 @@ do_erosion_shift : process(
     binary_pixel_in( 3 downto 0 )
 )
 variable position : integer := 0;
-
-function min2(a, b : std_logic_vector(3 downto 0)) return std_logic_vector is
-begin
-    if unsigned(a) <= unsigned(b) then
-        return a;
-    else
-        return b;
-    end if;
-end function;
 
 begin
     if ( rising_edge( video_clock )) then
