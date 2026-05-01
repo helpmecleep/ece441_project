@@ -1,0 +1,93 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity erosion_filter is
+    generic (
+        SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
+        SCREEN_Y_SIZE : UNSIGNED( 9 downto 0 )
+    );
+    port (
+        video_clock : in STD_LOGIC;
+        visible_frame : in STD_LOGIC;
+        v_sync : in STD_LOGIC;
+        binary_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
+        pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
+    );
+end erosion_filter;
+
+architecture Behavioral of erosion_filter is
+
+-- Type definitions for line buffer and window
+type erosion_line_buffer_type is array(( to_integer( SCREEN_X_SIZE ) * 3 ) - 1 downto 0 ) of STD_LOGIC_VECTOR( 3 downto 0 );
+type erosion_window_3_by_3_type is array (0 to 2, 0 to 2 ) of std_logic_vector(3 downto 0);
+
+-- Signals for line buffer and window
+signal erosion_line_buffer : erosion_line_buffer_type;
+signal erosion_window_3_by_3 : erosion_window_3_by_3_type;
+-- Intermediate signals for erosion calculation
+signal min_row0, min_row1, min_row2: std_logic_vector(3 downto 0);
+
+-- Signals for final erosion output
+signal erosion_result : std_logic_vector(3 downto 0);
+
+
+begin
+
+do_erosion_shift : process( 
+    video_clock,
+    v_sync,
+    visible_frame,
+    erosion_line_buffer,
+    binary_pixel_in( 3 downto 0 )
+)
+variable position : integer := 0;
+
+begin
+    if ( rising_edge( video_clock )) then
+        if (( visible_frame = '1' ) or ( v_sync = '0' )) then
+             
+            for position in (( to_integer( SCREEN_X_SIZE ) * 3 ) - 1) downto 1 loop
+                erosion_line_buffer( position ) <= erosion_line_buffer( position - 1 );
+            end loop;
+            
+            if ( v_sync = '0' ) then
+                erosion_line_buffer( 0 ) <= "0000";
+            else
+                erosion_line_buffer( 0 ) <= binary_pixel_in( 3 downto 0 );
+            end if;
+
+        end if;
+    end if;
+end process;
+
+-- Row 0 of the 3x3 window  
+erosion_window_3_by_3( 0, 0 ) <= erosion_line_buffer(0 + 0);
+erosion_window_3_by_3( 0, 1 ) <= erosion_line_buffer(1 + 0);
+erosion_window_3_by_3( 0, 2 ) <= erosion_line_buffer(2 + 0);
+
+-- Row 1 of the 3x3 window
+erosion_window_3_by_3( 1, 0 ) <= erosion_line_buffer(0 + to_integer( SCREEN_X_SIZE ));
+erosion_window_3_by_3( 1, 1 ) <= erosion_line_buffer(1 + to_integer( SCREEN_X_SIZE ));
+erosion_window_3_by_3( 1, 2 ) <= erosion_line_buffer(2 + to_integer( SCREEN_X_SIZE ));
+
+-- Row 2 of the 3x3 window
+erosion_window_3_by_3( 2, 0 ) <= erosion_line_buffer(0 + to_integer( SCREEN_X_SIZE ) * 2);
+erosion_window_3_by_3( 2, 1 ) <= erosion_line_buffer(1 + to_integer( SCREEN_X_SIZE ) * 2);
+erosion_window_3_by_3( 2, 2 ) <= erosion_line_buffer(2 + to_integer( SCREEN_X_SIZE ) * 2);
+
+     
+        
+-- 
+-- erosion calculation: find min of the 3x3 window
+--
+
+min_row0 <= minimum(erosion_window_3_by_3(0,0), erosion_window_3_by_3(0,1), erosion_window_3_by_3(0,2));
+min_row1 <= minimum(erosion_window_3_by_3(1,0), erosion_window_3_by_3(1,1), erosion_window_3_by_3(1,2));
+min_row2 <= minimum(erosion_window_3_by_3(2,0), erosion_window_3_by_3(2,1), erosion_window_3_by_3(2,2));
+
+erosion_result <= minimum(min_row0, min_row1, min_row2);
+
+pixel_out <= erosion_result & erosion_result & erosion_result;
+
+end Behavioral;
