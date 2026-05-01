@@ -43,6 +43,15 @@ do_erosion_shift : process(
 )
 variable position : integer := 0;
 
+function min2(a, b : std_logic_vector(3 downto 0)) return std_logic_vector is
+begin
+    if unsigned(a) <= unsigned(b) then
+        return a;
+    else
+        return b;
+    end if;
+end function;
+
 begin
     if ( rising_edge( video_clock )) then
         if (( visible_frame = '1' ) or ( v_sync = '0' )) then
@@ -82,11 +91,11 @@ erosion_window_3_by_3( 2, 2 ) <= erosion_line_buffer(2 + to_integer( SCREEN_X_SI
 -- erosion calculation: find min of the 3x3 window
 --
 
-min_row0 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(0,0)), unsigned(erosion_window_3_by_3(0,1))), unsigned(erosion_window_3_by_3(0,2))));
-min_row1 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(1,0)), unsigned(erosion_window_3_by_3(1,1))), unsigned(erosion_window_3_by_3(1,2))));
-min_row2 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(2,0)), unsigned(erosion_window_3_by_3(2,1))), unsigned(erosion_window_3_by_3(2,2))));
+min_row0 <= min2(min2(erosion_window_3_by_3(0,0), erosion_window_3_by_3(0,1)), erosion_window_3_by_3(0,2));
+min_row1 <= min2(min2(erosion_window_3_by_3(1,0), erosion_window_3_by_3(1,1)), erosion_window_3_by_3(1,2));
+min_row2 <= min2(min2(erosion_window_3_by_3(2,0), erosion_window_3_by_3(2,1)), erosion_window_3_by_3(2,2));
 
-erosion_result <= std_logic_vector(minimum(minimum(unsigned(min_row0), unsigned(min_row1)), unsigned(min_row2)));
+erosion_result <= min2(min2(min_row0, min_row1), min_row2);
 
 pixel_out <= erosion_result & erosion_result & erosion_result;
 
