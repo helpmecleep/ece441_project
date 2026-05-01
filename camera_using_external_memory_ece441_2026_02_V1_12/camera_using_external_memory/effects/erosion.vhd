@@ -82,11 +82,11 @@ erosion_window_3_by_3( 2, 2 ) <= erosion_line_buffer(2 + to_integer( SCREEN_X_SI
 -- erosion calculation: find min of the 3x3 window
 --
 
-min_row0 <= minimum(minimum(erosion_window_3_by_3(0,0), erosion_window_3_by_3(0,1)), erosion_window_3_by_3(0,2));
-min_row1 <= minimum(minimum(erosion_window_3_by_3(1,0), erosion_window_3_by_3(1,1)), erosion_window_3_by_3(1,2));
-min_row2 <= minimum(minimum(erosion_window_3_by_3(2,0), erosion_window_3_by_3(2,1)), erosion_window_3_by_3(2,2));
+min_row0 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(0,0)), unsigned(erosion_window_3_by_3(0,1))), unsigned(erosion_window_3_by_3(0,2))));
+min_row1 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(1,0)), unsigned(erosion_window_3_by_3(1,1))), unsigned(erosion_window_3_by_3(1,2))));
+min_row2 <= std_logic_vector(minimum(minimum(unsigned(erosion_window_3_by_3(2,0)), unsigned(erosion_window_3_by_3(2,1))), unsigned(erosion_window_3_by_3(2,2))));
 
-erosion_result <= minimum(minimum(min_row0, min_row1), min_row2);
+erosion_result <= std_logic_vector(minimum(minimum(unsigned(min_row0), unsigned(min_row1)), unsigned(min_row2)));
 
 pixel_out <= erosion_result & erosion_result & erosion_result;
 
