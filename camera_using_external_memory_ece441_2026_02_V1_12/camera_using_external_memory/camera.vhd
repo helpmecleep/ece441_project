@@ -315,7 +315,7 @@ component binary_filter is
         RGBin : in STD_LOGIC_VECTOR (11 downto 0);
         BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
         ButtonUp, ButtonDown : in STD_LOGIC;
-        filter_select : in STD_LOGIC_VECTOR(2 downto 0);
+        filter_options : in STD_LOGIC_VECTOR(2 downto 0);
         visible_frame : in STD_LOGIC;
         v_sync : in STD_LOGIC
     );
@@ -668,7 +668,7 @@ convert_to_binary : binary_filter
         BinaryOut => binary_pixel,
         ButtonUp => debouncedButtonUp,
         ButtonDown => debouncedButtonDown,
-        filter_select => filter_options,
+        filter_options => filter_options,
         visible_frame => visible_frame,
         v_sync        => v_sync
     );
