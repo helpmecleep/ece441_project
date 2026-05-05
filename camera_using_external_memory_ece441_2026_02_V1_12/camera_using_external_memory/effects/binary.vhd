@@ -56,10 +56,10 @@ begin
         );
     -- open_filter : entity work.open_filter
     -- close_filter : entity work.close_filter
-    red_temp   <= "00" & unsigned(RGBin(11 downto 10));
+    red_temp <= "00" & unsigned(RGBin(11 downto 10));
     green_temp <= "00" & unsigned(RGBin(7 downto 6));
-    blue_temp  <= "00" & unsigned(RGBin(3 downto 2));
-    intensity  <= red_temp + green_temp + blue_temp;
+    blue_temp <= "00" & unsigned(RGBin(3 downto 2));
+    intensity <= red_temp + green_temp + blue_temp;
 
     process(clock)
     begin
@@ -83,17 +83,17 @@ begin
         end if;
     end process;
 
-    raw_binary  <= (others => '0') when intensity < threshold else (others => '1');
+    raw_binary <= (others => '0') when intensity < threshold else (others => '1');
     binary_4bit <= "0000"          when intensity < threshold else "1111";
 
-    erosion_input  <= dilation_pixel(3 downto 0) when filter_options = "100" else binary_4bit;
+    erosion_input <= dilation_pixel(3 downto 0) when filter_options = "100" else binary_4bit;
     dilation_input <= erosion_pixel(3 downto 0)  when filter_options = "011" else binary_4bit;
 
-    open_pixel  <= dilation_pixel when filter_options = "011" else (others => '0');
+    open_pixel <= dilation_pixel when filter_options = "011" else (others => '0');
     close_pixel <= erosion_pixel  when filter_options = "100" else (others => '0');
 
 
-    BinaryOut <= raw_binary     when filter_options = "000" else
+    BinaryOut <= raw_binary    when filter_options = "000" else
                 erosion_pixel  when filter_options = "001" else
                 dilation_pixel when filter_options = "010" else
                 open_pixel     when filter_options = "011" else
