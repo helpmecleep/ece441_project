@@ -29,7 +29,7 @@ entity camera is
        v_sync_signal : out std_logic;
 
        stream_select : in std_logic_vector( 2 downto 0 );
-       filter_options : in std_logic_vector( 1 downto 0 );
+       filter_options : in std_logic_vector( 2 downto 0 );
 
        clock : in std_logic;
        camera_configured : out std_logic;
@@ -302,7 +302,7 @@ component sobel_filter is
         video_clock : in STD_LOGIC;
         v_sync : in STD_LOGIC;
         visible_frame : in STD_LOGIC;
-        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
+        filter_options : in STD_LOGIC_VECTOR( 2 downto 0 );
         gray_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
 
         pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
@@ -314,43 +314,12 @@ component binary_filter is
         clock: in STD_LOGIC;
         RGBin : in STD_LOGIC_VECTOR (11 downto 0);
         BinaryOut : out STD_LOGIC_VECTOR (11 downto 0);
-        ButtonUp, ButtonDown : in STD_LOGIC
-    );
-end component;
-
-component dilation_filter is
-    generic (
-        SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
-        SCREEN_Y_SIZE : UNSIGNED( 9 downto 0 )
-    );
-    port (
-        video_clock : in STD_LOGIC;
-        v_sync : in STD_LOGIC;
+        ButtonUp, ButtonDown : in STD_LOGIC;
+        filter_select : in STD_LOGIC_VECTOR(2 downto 0);
         visible_frame : in STD_LOGIC;
-        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
-        binary_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
-
-        pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
+        v_sync : in STD_LOGIC
     );
 end component;
-
-component erosion_filter is
-    generic (
-        SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
-        SCREEN_Y_SIZE : UNSIGNED( 9 downto 0 )
-    );
-    port (
-        video_clock : in STD_LOGIC;
-        v_sync : in STD_LOGIC;
-        visible_frame : in STD_LOGIC;
-        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
-        binary_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
-
-        pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
-    );
-end component;
-
-
 constant PIXEL_RED : STD_LOGIC_VECTOR( 11 downto 0 ) := "111100000000";
 constant PIXEL_GREEN : STD_LOGIC_VECTOR( 11 downto 0 ) := "000011110000";
 constant PIXEL_BLUE : STD_LOGIC_VECTOR( 11 downto 0 ) := "000000001111";
@@ -417,8 +386,6 @@ signal xor_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal gray_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal sobel_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal binary_pixel : STD_LOGIC_VECTOR(11 downto 0);
-signal dilation_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
-signal erosion_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal threshold_value_internal: STD_LOGIC_VECTOR( 31 downto 0 );
 signal debounce_clock:  std_logic;
 signal debouncedButtonUp: std_logic := '0';
@@ -700,35 +667,11 @@ convert_to_binary : binary_filter
         RGBin => stream1_pixel,
         BinaryOut => binary_pixel,
         ButtonUp => debouncedButtonUp,
-        ButtonDown => debouncedButtonDown
-    );
-
-video_dilation_image : dilation_filter
-    generic map (
-        SCREEN_X_SIZE => SCREEN_X_SIZE,
-        SCREEN_Y_SIZE => SCREEN_Y_SIZE
-    )
-    port map (
-        video_clock => video_clock,
+        ButtonDown => debouncedButtonDown,
+        filter_select => filter_options,
         visible_frame => visible_frame,
-        v_sync => v_sync,
-        binary_pixel_in => binary_pixel( 3 downto 0 ),
-        pixel_out => dilation_pixel            
+        v_sync        => v_sync
     );
-
-video_erosion_image : erosion_filter
-    generic map (
-        SCREEN_X_SIZE => SCREEN_X_SIZE,
-        SCREEN_Y_SIZE => SCREEN_Y_SIZE
-    )
-    port map (
-        video_clock => video_clock,
-        visible_frame => visible_frame,
-        v_sync => v_sync,
-        binary_pixel_in => binary_pixel( 3 downto 0 ),
-        pixel_out => erosion_pixel            
-    );
-
 process( 
     stream_select,
     stream1_pixel,
@@ -751,9 +694,7 @@ process(
     sobel_pixel, 
     gray_pixel,
     gray_negative_pixel,
-    binary_pixel,
-    dilation_pixel,
-    erosion_pixel
+    binary_pixel
 )
 
 begin

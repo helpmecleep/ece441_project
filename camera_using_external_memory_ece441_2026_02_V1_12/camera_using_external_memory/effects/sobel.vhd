@@ -13,10 +13,9 @@ entity sobel_filter is
     port (
         video_clock : in STD_LOGIC;
         visible_frame : in STD_LOGIC;
-        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
+        filter_options : in STD_LOGIC_VECTOR( 2 downto 0 );
         v_sync : in STD_LOGIC;
         gray_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
-
         pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
     );
 end sobel_filter;
@@ -109,12 +108,9 @@ dataxy <= ( '0' & datay ) + ( '0' & datax );
 ----------------- filter out
 
 pixel_out <=
-        datax(6 downto 3) & datax(6 downto 3) & datax(6 downto 3)  when filter_options ="10" else
-        datay(6 downto 3) & datay(6 downto 3) & datay(6 downto 3)  when filter_options ="01" else
-        dataxy(7 downto 4) & dataxy(7 downto 4) & dataxy(7 downto 4)  when filter_options ="11" else
-        dataxy(3 downto 0) & dataxy(3 downto 0) & dataxy(3 downto 0);
-
-
-
-
+    datax(6 downto 3) & datax(6 downto 3) & datax(6 downto 3)    when filter_options(1 downto 0) = "10" else
+    datay(6 downto 3) & datay(6 downto 3) & datay(6 downto 3)    when filter_options(1 downto 0) = "01" else
+    dataxy(7 downto 4) & dataxy(7 downto 4) & dataxy(7 downto 4) when filter_options(1 downto 0) = "11" else
+    dataxy(3 downto 0) & dataxy(3 downto 0) & dataxy(3 downto 0);
+    
 end Behavioral;
