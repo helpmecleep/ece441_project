@@ -318,6 +318,22 @@ component binary_filter is
     );
 end component;
 
+component dilation_filter is
+    generic (
+        SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
+        SCREEN_Y_SIZE : UNSIGNED( 9 downto 0 )
+    );
+    port (
+        video_clock : in STD_LOGIC;
+        v_sync : in STD_LOGIC;
+        visible_frame : in STD_LOGIC;
+        filter_options : in STD_LOGIC_VECTOR( 1 downto 0 );
+        binary_pixel_in : in STD_LOGIC_VECTOR( 3 downto 0 );
+
+        pixel_out : out STD_LOGIC_VECTOR( 11 downto 0 )
+    );
+end component;
+
 component erosion_filter is
     generic (
         SCREEN_X_SIZE : UNSIGNED( 10 downto 0 );
@@ -401,6 +417,7 @@ signal xor_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal gray_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal sobel_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal binary_pixel : STD_LOGIC_VECTOR(11 downto 0);
+signal dilation_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal erosion_pixel : STD_LOGIC_VECTOR( 11 downto 0 );
 signal threshold_value_internal: STD_LOGIC_VECTOR( 31 downto 0 );
 signal debounce_clock:  std_logic;
@@ -686,6 +703,19 @@ convert_to_binary : binary_filter
         ButtonDown => debouncedButtonDown
     );
 
+video_dilation_image : dilation_filter
+    generic map (
+        SCREEN_X_SIZE => SCREEN_X_SIZE,
+        SCREEN_Y_SIZE => SCREEN_Y_SIZE
+    )
+    port map (
+        video_clock => video_clock,
+        visible_frame => visible_frame,
+        v_sync => v_sync,
+        binary_pixel_in => binary_pixel( 3 downto 0 ),
+        pixel_out => dilation_pixel            
+    );
+
 video_erosion_image : erosion_filter
     generic map (
         SCREEN_X_SIZE => SCREEN_X_SIZE,
@@ -722,6 +752,7 @@ process(
     gray_pixel,
     gray_negative_pixel,
     binary_pixel,
+    dilation_pixel,
     erosion_pixel
 )
 
