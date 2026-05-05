@@ -21,7 +21,9 @@ architecture Behavioral of binary_filter is
     signal upPrev: std_logic := '0';
     signal downPrev: std_logic := '0';
     signal raw_binary : STD_LOGIC_VECTOR(11 downto 0);
+    signal dilation_input : STD_LOGIC_VECTOR(3 downto 0);
     signal dilation_pixel : STD_LOGIC_VECTOR(11 downto 0);
+    signal erosion_input : STD_LOGIC_VECTOR(3 downto 0);
     signal erosion_pixel : STD_LOGIC_VECTOR(11 downto 0);
     signal open_pixel : STD_LOGIC_VECTOR(11 downto 0);
     signal close_pixel : STD_LOGIC_VECTOR(11 downto 0);
@@ -37,7 +39,7 @@ begin
             video_clock => clock,
             visible_frame => visible_frame,
             v_sync => v_sync,
-            binary_pixel_in => binary_4bit,
+            binary_pixel_in => dilation_input,
             pixel_out => dilation_pixel
         );
     erosion_filter : entity work.erosion_filter
@@ -49,7 +51,7 @@ begin
             video_clock => clock,
             visible_frame => visible_frame,
             v_sync => v_sync,
-            binary_pixel_in => binary_4bit,
+            binary_pixel_in => erosion_input,
             pixel_out => erosion_pixel
         );
     -- open_filter : entity work.open_filter
@@ -84,13 +86,22 @@ begin
     raw_binary  <= (others => '0') when intensity < threshold else (others => '1');
     binary_4bit <= "0000"          when intensity < threshold else "1111";
 
-    BinaryOut <= raw_binary     when filter_select = "000" else
-             erosion_pixel  when filter_select = "001" else
-             dilation_pixel when filter_select = "010" else
-             raw_binary;
+    erosion_input  <= dilation_pixel(3 downto 0) when filter_select = "100" else binary_4bit;
+    dilation_input <= erosion_pixel(3 downto 0)  when filter_select = "011" else binary_4bit;
 
+    open_pixel  <= dilation_pixel when filter_select = "011" else (others => '0');
+    close_pixel <= erosion_pixel  when filter_select = "100" else (others => '0');
+
+
+    BinaryOut <= raw_binary     when filter_select = "000" else
+                erosion_pixel  when filter_select = "001" else
+                dilation_pixel when filter_select = "010" else
+                open_pixel     when filter_select = "011" else
+                close_pixel    when filter_select = "100" else
+                raw_binary;
     threshold_out <= (31 downto 8 => '0') &
                      std_logic_vector(to_unsigned(to_integer(threshold) / 10, 4)) &
                      std_logic_vector(to_unsigned(to_integer(threshold) mod 10, 4));
 
 end Behavioral;
+ 
