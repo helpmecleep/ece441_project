@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.tcl"
+  variable script "C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,8 +56,8 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
+set_param general.usePosixSpawnForFork 1
+set_param chipscope.maxJobs 3
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a100tcsg324-1
 
@@ -65,44 +65,43 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
-set_property parent.project_path C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
+set_property parent.project_path C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property ip_output_repo c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
+set_property ip_output_repo c:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/new/binary.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/debouncer.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/histogram.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/i2c_sender.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/negative.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/oled_display.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_capture.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_controller.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_registers.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/rgb_to_gray.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/sad.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/sobel.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/video.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/video_timing.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/xor.vhd
-  C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/dilation.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/erosion.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/binary.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/debouncer.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/histogram.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/i2c_sender.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/led_display.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/negative.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/oled_display.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_capture.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_controller.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/ov7670_registers.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/rgb_to_gray.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/sad.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/sobel.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/video.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/video_timing.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/effects/xor.vhd
+  C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera.vhd
 }
-read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/ddr/ddr/user_design/constraints/ddr_ooc.xdc]
+read_ip -quiet C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
+set_property used_in_implementation false [get_files -all c:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/line_buffer/line_buffer_ooc.xdc]
 
-read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/line_buffer/line_buffer_ooc.xdc]
-
-read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
+read_ip -quiet C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+set_property used_in_implementation false [get_files -all c:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -113,12 +112,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/Nexys-A7-100T-Master.xdc
-set_property used_in_implementation false [get_files C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/Nexys-A7-100T-Master.xdc]
+read_xdc C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/basys_constraints.xdc
+set_property used_in_implementation false [get_files C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/basys_constraints.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/utils_1/imports/synth_1/camera.dcp
+read_checkpoint -auto_incremental -incremental C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/utils_1/imports/synth_1/camera.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

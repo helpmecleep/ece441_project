@@ -89,10 +89,10 @@ begin
     dilation_input <= binary_4bit;
 
     -- opening: erosion output fed into dilation
-    open_pixel  <= dilation_pixel when filter_select = "011" else (others => '0');
+    open_pixel  <= dilation_pixel when filter_options = "011" else (others => '0');
 
     -- closing: dilation output fed into erosion  
-    close_pixel <= erosion_pixel  when filter_select = "100" else (others => '0');
+    close_pixel <= erosion_pixel  when filter_options = "100" else (others => '0');
 
     BinaryOut <= raw_binary    when filter_options = "000" else
                 erosion_pixel  when filter_options = "001" else

@@ -151,29 +151,29 @@ set_property PACKAGE_PIN U18 [get_ports { configure_camera }]
 
 ##Pmod Header JB
 ##Sch name = JB1
-set_property PACKAGE_PIN A14 [get_ports {in_port[8]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[8]}]
+set_property PACKAGE_PIN A14 [get_ports {ov7670_reset}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_reset}]
 ##Sch name = JB2
-set_property PACKAGE_PIN A16 [get_ports {in_port[9]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[9]}]
+set_property PACKAGE_PIN A16 [get_ports {ov7670_pwdn}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_pwdn}]
 ##Sch name = JB3
-set_property PACKAGE_PIN B15 [get_ports {in_port[10]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[10]}]
+set_property PACKAGE_PIN B15 [get_ports {ov7670_pclk}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_pclk}]
 ##Sch name = JB4
-set_property PACKAGE_PIN B16 [get_ports {in_port[11]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[11]}]
+set_property PACKAGE_PIN B16 [get_ports {ov7670_siod}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_siod}]
 ##Sch name = JB7
-set_property PACKAGE_PIN A15 [get_ports {in_port[12]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[12]}]
+set_property PACKAGE_PIN A15 [get_ports {ov7670_vsync}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_vsync}]
 ##Sch name = JB8
-set_property PACKAGE_PIN A17 [get_ports {in_port[13]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[13]}]
+set_property PACKAGE_PIN A17 [get_ports {ov7670_href}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_href}]
 ##Sch name = JB9
-set_property PACKAGE_PIN C15 [get_ports {in_port[14]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[14]}]
+set_property PACKAGE_PIN C15 [get_ports {ov7670_sioc}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_sioc}]
 ##Sch name = JB10 
-set_property PACKAGE_PIN C16 [get_ports {in_port[15]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[15]}]
+set_property PACKAGE_PIN C16 [get_ports {ov7670_xclk}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_xclk}]
  
 
 
@@ -185,17 +185,17 @@ set_property PACKAGE_PIN K17 [get_ports { ov7670_data[0] }]
 set_property PACKAGE_PIN M18 [get_ports { ov7670_data[1] }]				
 	set_property IOSTANDARD LVCMOS33 [get_ports { ov7670_data[1] }]
 ##Sch name = JC3
-#set_property PACKAGE_PIN N17 [get_ports {ov7670_data[2]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[2]}]
+set_property PACKAGE_PIN N17 [get_ports {ov7670_data[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[2]}]
 ##Sch name = JC4
-#set_property PACKAGE_PIN P18 [get_ports {ov7670_data[3]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[3]}]
+set_property PACKAGE_PIN P18 [get_ports {ov7670_data[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[3]}]
 ##Sch name = JC7
-#set_property PACKAGE_PIN L17 [get_ports {ov7670_data[4]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[4]}]
+set_property PACKAGE_PIN L17 [get_ports {ov7670_data[4]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[4]}]
 ##Sch name = JC8
-#set_property PACKAGE_PIN M19 [get_ports {ov7670_data[5]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[5]}]
+set_property PACKAGE_PIN M19 [get_ports {ov7670_data[5]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[5]}]
 ##Sch name = JC9
 set_property PACKAGE_PIN P17 [get_ports {ov7670_data[6]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {ov7670_data[6]}]

@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/impl_1/camera.tcl"
+  variable script "C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/impl_1/camera.tcl"
   variable category "vivado_impl"
 }
 
@@ -104,28 +104,27 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 2
-  set_param xicom.use_bs_reader 1
-  set_param runs.launchOptions { -jobs 4  }
+  set_param general.usePosixSpawnForFork 1
+  set_param chipscope.maxJobs 3
+  set_param runs.launchOptions { -jobs 6  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a100tcsg324-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
-  set_property parent.project_path C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
-  set_property ip_output_repo C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
+  set_property webtalk.parent_dir C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/wt [current_project]
+  set_property parent.project_path C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.xpr [current_project]
+  set_property ip_output_repo C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.dcp
-  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/ddr/ddr.xci
-  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
-  read_ip -quiet C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+  add_files -quiet C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.runs/synth_1/camera.dcp
+  read_ip -quiet C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/line_buffer/line_buffer.xci
+  read_ip -quiet C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/camera_using_external_memory.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/Users/avabirtwistle/Documents/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/Nexys-A7-100T-Master.xdc
+  read_xdc C:/Users/Saleh/ProjKeTea/Projects/ece441_project/camera_using_external_memory_ece441_2026_02_V1_12/camera_using_external_memory/basys_constraints.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
@@ -194,7 +193,9 @@ OPTRACE "implement_debug_core" START { }
 OPTRACE "implement_debug_core" END { }
   } 
 OPTRACE "place_design" START { }
+  set_param project.isImplRun true
   place_design 
+  set_param project.isImplRun false
 OPTRACE "place_design" END { }
 OPTRACE "read constraints: place_design_post" START { }
 OPTRACE "read constraints: place_design_post" END { }
